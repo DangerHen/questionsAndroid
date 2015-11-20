@@ -32,6 +32,8 @@ public class ReplyActivity extends Activity {
     private String mQuestionKey;
     private ImageView imageView;
     private String mImageString="";
+    private String mUsername;
+    private boolean incognitoMode;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +49,8 @@ public class ReplyActivity extends Activity {
 
         imageView= (ImageView) findViewById(R.id.ImageView);
         mQuestionKey = intent.getExtras().getString("questionKey");
+        mUsername = intent.getExtras().getString("Username");
+        incognitoMode = intent.getBooleanExtra("IncognitoMode",false);
         //mImageString = intent.getExtras().getString("imageString");
 
         mAPI.getQuestion(mQuestionKey).enqueue(new Callback<Question>() {
@@ -91,7 +95,7 @@ public class ReplyActivity extends Activity {
                         String replyContent = replyText.getText().toString();
                         ReplyActivity r = (ReplyActivity) view.getContext();
                         //Reply reply = new Reply(replyContent, mQuestionKey);
-                        Reply reply = new Reply(replyContent, mQuestionKey, "Anonymous", false);
+                        Reply reply = new Reply(replyContent, mQuestionKey, mUsername, incognitoMode);
                         r.sendReply(reply);
                         replyText.setText("");
                     }

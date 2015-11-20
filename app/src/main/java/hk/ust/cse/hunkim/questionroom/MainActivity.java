@@ -48,6 +48,7 @@ import org.json.JSONObject;
 
 public class MainActivity extends ListActivity {
     private String mUsername;
+    private boolean incognitoMode = false;
     private String mRoomName;
     private QuestionAdapter mQuestionAdapter;
     private RESTfulAPI mAPI;
@@ -283,7 +284,7 @@ public class MainActivity extends ListActivity {
             // Create our 'model', a Chat object
             //Question question = new Question(input, mRoomName);
 
-            Question question = new Question(input, mRoomName, "Anonymous", false); // change Anonymous to the name of logged in user
+            Question question = new Question(input, mRoomName, mUsername, incognitoMode); // change Anonymous to the name of logged in user
 
             question.setImage(image);
             Button draw_button= (Button) findViewById(R.id.DrawButton);
@@ -320,12 +321,16 @@ public class MainActivity extends ListActivity {
     private void BeginDrawing(){
         Intent intent= new Intent(this, DrawActivity.class);
         intent.putExtra("RoomName",mRoomName);
+        intent.putExtra("Username", mUsername);
+        intent.putExtra("IncognitoMode",incognitoMode);
         startActivity(intent);
     }
 
     public void enterReply(String key) {
         Intent intent = new Intent(this, ReplyActivity.class);
         intent.putExtra("questionKey", key);
+        intent.putExtra("Username", mUsername);
+        intent.putExtra("IncognitoMode",incognitoMode);
         startActivity(intent);
     }
 
@@ -403,6 +408,9 @@ public class MainActivity extends ListActivity {
             super.startActivity(intent);
         }
     }
+
+    public void setIncognitoMode(boolean b) { incognitoMode = b;}
+
 };
 
 
