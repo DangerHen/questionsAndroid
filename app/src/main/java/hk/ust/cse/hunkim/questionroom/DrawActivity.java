@@ -70,6 +70,7 @@ public class DrawActivity extends Activity implements View.OnClickListener {
         Intent intent=getIntent();
         String picture= intent.getExtras().getString("image");
         mRoomName=intent.getExtras().getString("RoomName");
+        ((EditText)findViewById(R.id.messageInput)).setText(intent.getExtras().getString("Message"));
         if (picture!=null) {
             picture=picture.substring(22);
             byte[] encodeByte = Base64.decode(picture, Base64.DEFAULT);
@@ -191,7 +192,11 @@ public class DrawActivity extends Activity implements View.OnClickListener {
                     if (picture.contains(BlankDraw)) {
                         intent.putExtra("Doodle", (String) null);
                     } else {
-                        intent.putExtra("Doodle", picture);
+                        if (((CheckBox)findViewById(R.id.checkBox)).isChecked())
+                            intent.putExtra("Doodle", picture);
+                        else
+                            intent.putExtra("Doodle", (String)null);
+                        intent.putExtra("Message",((EditText)findViewById(R.id.messageInput)).getText().toString());
                     }
                     DrawActivity.this.setResult(RESULT_OK, intent);
                     DrawActivity.this.finish();
