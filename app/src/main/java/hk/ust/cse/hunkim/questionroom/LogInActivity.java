@@ -32,15 +32,18 @@ public class LogInActivity extends AppCompatActivity {
 
 public void TryToLogIn() {
     final String username = ((EditText) findViewById(R.id.username)).getText().toString();
-    String password = ((EditText) findViewById(R.id.password)).getText().toString();
+    final String password = ((EditText) findViewById(R.id.password)).getText().toString();
     User user = new User(username, password);
     APIService service = RESTfulAPI.getInstance().getService();
     service.userAuth(user, "login").enqueue(new Callback<ResponseResult>() {
         @Override
         public void onResponse(Response<ResponseResult> response, Retrofit retrofit) {
-            if (response.body() != null && response.body().getResult() == true) {
+            if (username.equals("") || password.equals("")) {
+                Toast.makeText(LogInActivity.this, "Empty username/password", Toast.LENGTH_SHORT).show();
+            }
+            else if (response.body() != null && response.body().getResult() == true) {
                 Intent intent = new Intent();
-                intent.putExtra("username", username);
+                intent.putExtra("username", "Signed in as " +username + " \n/Log in as another account");
                 LogInActivity.this.setResult(RESULT_OK, intent);
                 LogInActivity.this.finish();
             } else if (response.body()!=null){

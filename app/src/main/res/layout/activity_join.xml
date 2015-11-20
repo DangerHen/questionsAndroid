@@ -39,14 +39,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Log In"
-        android:textStyle="bold" />
+        android:text="LOG IN"
+        android:textAllCaps="false"
+         />
 
     <Button
         android:id="@+id/signup_button"
-        android:text="Sign Up"
+        android:text="SIGN UP"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAllCaps="false"
         />
 </LinearLayout>
 

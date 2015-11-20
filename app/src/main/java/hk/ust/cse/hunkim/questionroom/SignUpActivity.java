@@ -31,8 +31,8 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
 public void TryToSignUp() {
-    String username = ((EditText) findViewById(R.id.username2)).getText().toString();
-    String password = ((EditText) findViewById(R.id.password2)).getText().toString();
+    final String username = ((EditText) findViewById(R.id.username2)).getText().toString();
+    final String password = ((EditText) findViewById(R.id.password2)).getText().toString();
     mUsername=username;
     APIService service = RESTfulAPI.getInstance().getService();
     User user = new User(username, password);
@@ -40,14 +40,17 @@ public void TryToSignUp() {
         @Override
         public void onResponse(Response<ResponseResult> response, Retrofit retrofit) {
             ResponseResult result = response.body();
-            if (result != null && result.getResult() == true) {
+            if (username.equals("") || password.equals("")) {
+                Toast.makeText(SignUpActivity.this, "Empty username/password", Toast.LENGTH_SHORT).show();
+            }
+            else if (result != null && result.getResult() == true) {
                 Intent intent = new Intent();
                 intent.putExtra("username", mUsername);
                 SignUpActivity.this.setResult(RESULT_OK, intent);
                 SignUpActivity.this.finish();
             } else if (result != null){
                 ((EditText) findViewById(R.id.password2)).setText("");
-                Toast.makeText(SignUpActivity.this, "Invalid username/password", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignUpActivity.this, "The username has existed.", Toast.LENGTH_SHORT).show();
             }
         }
 
