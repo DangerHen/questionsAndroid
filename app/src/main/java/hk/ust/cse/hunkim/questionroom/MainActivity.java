@@ -272,6 +272,7 @@ public class MainActivity extends ListActivity {
         if (!input.equals("")) {
             // Create our 'model', a Chat object
             //Question question = new Question(input, mRoomName);
+
             Question question = new Question(input, mRoomName, "Anonymous", false); // change Anonymous to the name of logged in user
 
             question.setImage(image);

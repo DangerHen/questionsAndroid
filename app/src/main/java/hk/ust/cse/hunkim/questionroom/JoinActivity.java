@@ -22,7 +22,7 @@ public class JoinActivity extends Activity {
      */
     // UI references.
     private TextView roomNameView;
-    private String username="";
+    private String username= "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
