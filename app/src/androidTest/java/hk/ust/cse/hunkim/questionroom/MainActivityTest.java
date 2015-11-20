@@ -36,7 +36,7 @@ public class MainActivityTest extends ActivityUnitTestCase<MainActivity> {
     @MediumTest
     public void testPreconditions() {
         startActivity(mStartIntent, null, null);
-        mButton = (ImageButton) getActivity().findViewById(R.id.sendButton);
+        mButton = (ImageButton) getActivity().findViewById(R.id.draw_btn);
         assertNotNull(getActivity());
         assertNotNull(mButton);
 
@@ -47,7 +47,7 @@ public class MainActivityTest extends ActivityUnitTestCase<MainActivity> {
     @MediumTest
     public void testPostingMessage() {
         Activity activity = startActivity(mStartIntent, null, null);
-        mButton = (ImageButton) activity.findViewById(R.id.sendButton);
+        mButton = (ImageButton) activity.findViewById(R.id.draw_btn);
         final TextView text = (TextView) activity.findViewById(R.id.messageInput);
         final ListView lView = getActivity().getListView();
 
