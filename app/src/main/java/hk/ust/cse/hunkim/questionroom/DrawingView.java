@@ -105,7 +105,9 @@ public class DrawingView extends ImageView {
 
     public void setErase(boolean isErase){
         erase=isErase;
-        if(erase) drawPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+        if(erase) {
+            drawPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+        }
         else drawPaint.setXfermode(null);
     }
     public void startNew(){
