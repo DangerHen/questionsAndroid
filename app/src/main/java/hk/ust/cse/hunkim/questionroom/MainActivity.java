@@ -272,6 +272,7 @@ public class MainActivity extends ListActivity {
         if (!input.equals("")) {
             // Create our 'model', a Chat object
             //Question question = new Question(input, mRoomName);
+
             Question question = new Question(input, mRoomName, "Anonymous", false); // change Anonymous to the name of logged in user
 
             question.setImage(image);
@@ -308,6 +309,7 @@ public class MainActivity extends ListActivity {
 
     private void BeginDrawing(){
         Intent intent= new Intent(this, DrawActivity.class);
+        intent.putExtra("Message",((EditText)findViewById(R.id.messageInput)).getText().toString());
         intent.putExtra("image",image);
         intent.putExtra("RoomName",mRoomName);
         startActivityForResult(intent, 2);
@@ -362,6 +364,7 @@ public class MainActivity extends ListActivity {
         } else if (requestCode==2){
             if (resultCode == RESULT_OK){
                 image=data.getExtras().getString("Doodle");
+                ((EditText)findViewById(R.id.messageInput)).setText(data.getExtras().getString("Message"));
                 Button drawbutton= (Button)findViewById(R.id.DrawButton);
                 drawbutton.setText("Drawed");
             }
