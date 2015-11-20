@@ -22,7 +22,7 @@ public class JoinActivity extends Activity {
      */
     // UI references.
     private TextView roomNameView;
-    private String username;
+    private String username="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +89,7 @@ public class JoinActivity extends Activity {
             // Start main activity
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra(ROOM_NAME, room_name);
+            intent.putExtra("Username",username);
             startActivity(intent);
         }
     }

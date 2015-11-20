@@ -47,14 +47,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class MainActivity extends ListActivity {
-
+    private String mUsername;
     private String mRoomName;
     private QuestionAdapter mQuestionAdapter;
     private RESTfulAPI mAPI;
     private DBUtil dbutil;
     private Socket mSocket;
     private String image = null;
-    private String username;
     public DBUtil getDbutil() {
         return dbutil;
     }
@@ -63,7 +62,6 @@ public class MainActivity extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        username=null;
         dbutil = new DBUtil(new DBHelper(this));
         Intent intent = getIntent();
         assert (intent != null);
@@ -74,6 +72,7 @@ public class MainActivity extends ListActivity {
             mRoomName = "all";
         }
 
+        mUsername = intent.getExtras().getString("Username");
         mQuestionAdapter = new QuestionAdapter(this, new ArrayList<Question>());
         mAPI = RESTfulAPI.getInstance();
         createSocketEventListener();

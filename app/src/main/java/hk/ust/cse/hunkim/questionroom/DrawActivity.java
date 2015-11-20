@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -248,15 +249,16 @@ public class DrawActivity extends Activity implements View.OnClickListener {
             // Create our 'model', a Chat object
             //Question question = new Question(input, mRoomName);
             Question question = new Question(input, mRoomName, "Anonymous", false); // change Anonymous to the name of logged in user
-            drawView.setDrawingCacheEnabled(true);
-            Bitmap bitmap=drawView.getDrawingCache();
-            ByteArrayOutputStream baos=new  ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
-            byte [] b=baos.toByteArray();
-            String temp= Base64.encodeToString(b, Base64.DEFAULT);
-            String picture="data:image/png;base64,"+temp;
-            question.setImage(picture);
-
+            if (((CheckBox)findViewById(R.id.checkBox)).isChecked()) {
+                drawView.setDrawingCacheEnabled(true);
+                Bitmap bitmap = drawView.getDrawingCache();
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+                byte[] b = baos.toByteArray();
+                String temp = Base64.encodeToString(b, Base64.DEFAULT);
+                String picture = "data:image/png;base64," + temp;
+                question.setImage(picture);
+            }
             // Create a new, auto-generated child of that chat location, and save our chat data there
             mAPI.saveQuesion(question).enqueue(new Callback<Question>() {
                 @Override

@@ -26,8 +26,8 @@ import retrofit.Retrofit;
  */
 public class RESTfulAPI {
     private static RESTfulAPI instance = new RESTfulAPI();
-    private String serverURL = "http://54.169.201.112";
-    //private String serverURL = "http://54.254.251.203";
+    //private String serverURL = "http://54.169.201.112";
+    private String serverURL = "http://54.254.251.203";
     private Retrofit retrofit;
     private APIService service;
     private Socket mSocket;

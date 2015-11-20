@@ -40,11 +40,15 @@ public void TryToLogIn() {
                 intent.putExtra("username", username);
                 LogInActivity.this.setResult(RESULT_OK, intent);
                 LogInActivity.this.finish();
+            } else if (response.body()!=null){
+                ((EditText) findViewById(R.id.password)).setText("");
+                Toast.makeText(LogInActivity.this, "Invalid username/password", Toast.LENGTH_SHORT).show();
             }
         }
 
         @Override
         public void onFailure(Throwable t) {
+            ((EditText) findViewById(R.id.password)).setText("");
             Toast.makeText(LogInActivity.this, "Invalid username/password", Toast.LENGTH_SHORT).show();
         }
     });
