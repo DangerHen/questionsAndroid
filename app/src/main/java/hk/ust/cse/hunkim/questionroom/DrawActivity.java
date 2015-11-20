@@ -35,7 +35,7 @@ import retrofit.Retrofit;
 public class DrawActivity extends Activity implements View.OnClickListener {
     private DrawingView drawView;
     private float smallBrush, mediumBrush, largeBrush;
-    private ImageButton currPaint, drawBtn, eraseBtn,newBtn,saveBtn;
+    private ImageButton currPaint, drawBtn, eraseBtn,newBtn;
     private String mRoomName;
     final private String BlankDraw="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAuwAAAN4CAIAAAAXwipKAAAAA3NCSVQICAjb4U/gAAAPS0lEQVR4nO3WQQ0AIBDAMMC/58MDH7KkVbDn9swsAICa8zsAAOCFiQEAkkwMAJBkYgCAJBMDACSZGAAgycQAAEkmBgBIMjEAQJKJAQCSTAwAkGRiAIAkEwMAJJkYACDJxAAASSYGAEgyMQBAkokBAJJMDACQZGIAgCQTAwAkmRgAIMnEAABJJgYASDIxAECSiQEAkkwMAJBkYgCAJBMDACSZGAAgycQAAEkmBgBIMjEAQJKJAQCSTAwAkGRiAIAkEwMAJJkYACDJxAAASSYGAEgyMQBAkokBAJJMDACQZGIAgCQTAwAkmRgAIMnEAABJJgYASDIxAECSiQEAkkwMAJBkYgCAJBMDACSZGAAgycQAAEkmBgBIMjEAQJKJAQCSTAwAkGRiAIAkEwMAJJkYACDJxAAASSYGAEgyMQBAkokBAJJMDACQZGIAgCQTAwAkmRgAIMnEAABJJgYASDIxAECSiQEAkkwMAJBkYgCAJBMDACSZGAAgycQAAEkmBgBIMjEAQJKJAQCSTAwAkGRiAIAkEwMAJJkYACDJxAAASSYGAEgyMQBAkokBAJJMDACQZGIAgCQTAwAkmRgAIMnEAABJJgYASDIxAECSiQEAkkwMAJBkYgCAJBMDACSZGAAgycQAAEkmBgBIMjEAQJKJAQCSTAwAkGRiAIAkEwMAJJkYACDJxAAASSYGAEgyMQBAkokBAJJMDACQZGIAgCQTAwAkmRgAIMnEAABJJgYASDIxAECSiQEAkkwMAJBkYgCAJBMDACSZGAAgycQAAEkmBgBIMjEAQJKJAQCSTAwAkGRiAIAkEwMAJJkYACDJxAAASSYGAEgyMQBAkokBAJJMDACQZGIAgCQTAwAkmRgAIMnEAABJJgYASDIxAECSiQEAkkwMAJBkYgCAJBMDACSZGAAgycQAAEkmBgBIMjEAQJKJAQCSTAwAkGRiAIAkEwMAJJkYACDJxAAASSYGAEgyMQBAkokBAJJMDACQZGIAgCQTAwAkmRgAIMnEAABJJgYASDIxAECSiQEAkkwMAJBkYgCAJBMDACSZGAAgycQAAEkmBgBIMjEAQJKJAQCSTAwAkGRiAIAkEwMAJJkYACDJxAAASSYGAEgyMQBAkokBAJJMDACQZGIAgCQTAwAkmRgAIMnEAABJJgYASDIxAECSiQEAkkwMAJBkYgCAJBMDACSZGAAgycQAAEkmBgBIMjEAQJKJAQCSTAwAkGRiAIAkEwMAJJkYACDJxAAASSYGAEgyMQBAkokBAJJMDACQZGIAgCQTAwAkmRgAIMnEAABJJgYASDIxAECSiQEAkkwMAJBkYgCAJBMDACSZGAAgycQAAEkmBgBIMjEAQJKJAQCSTAwAkGRiAIAkEwMAJJkYACDJxAAASSYGAEgyMQBAkokBAJJMDACQZGIAgCQTAwAkmRgAIMnEAABJJgYASDIxAECSiQEAkkwMAJBkYgCAJBMDACSZGAAgycQAAEkmBgBIMjEAQJKJAQCSTAwAkGRiAIAkEwMAJJkYACDJxAAASSYGAEgyMQBAkokBAJJMDACQZGIAgCQTAwAkmRgAIMnEAABJJgYASDIxAECSiQEAkkwMAJBkYgCAJBMDACSZGAAgycQAAEkmBgBIMjEAQJKJAQCSTAwAkGRiAIAkEwMAJJkYACDJxAAASSYGAEgyMQBAkokBAJJMDACQZGIAgCQTAwAkmRgAIMnEAABJJgYASDIxAECSiQEAkkwMAJBkYgCAJBMDACSZGAAgycQAAEkmBgBIMjEAQJKJAQCSTAwAkGRiAIAkEwMAJJkYACDJxAAASSYGAEgyMQBAkokBAJJMDACQZGIAgCQTAwAkmRgAIMnEAABJJgYASDIxAECSiQEAkkwMAJBkYgCAJBMDACSZGAAgycQAAEkmBgBIMjEAQJKJAQ";
     private RESTfulAPI mAPI;
@@ -59,8 +59,6 @@ public class DrawActivity extends Activity implements View.OnClickListener {
         eraseBtn.setOnClickListener(this);
         newBtn = (ImageButton)findViewById(R.id.new_btn);
         newBtn.setOnClickListener(this);
-        saveBtn = (ImageButton)findViewById(R.id.save_btn);
-        saveBtn.setOnClickListener(this);
         findViewById(R.id.sendButton2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -173,43 +171,6 @@ public class DrawActivity extends Activity implements View.OnClickListener {
                 }
             });
             newDialog.show();
-        }
-        else if(view.getId()==R.id.save_btn){
-            drawView.setDrawingCacheEnabled(true);
-
-            Bitmap bitmap=drawView.getDrawingCache();
-            ByteArrayOutputStream baos=new  ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
-            byte [] b=baos.toByteArray();
-            String temp= Base64.encodeToString(b, Base64.DEFAULT);
-            final String picture="data:image/png;base64,"+temp;
-            AlertDialog.Builder saveDialog = new AlertDialog.Builder(this);
-            saveDialog.setTitle("Save drawing");
-            saveDialog.setMessage("Save drawing to device Gallery?");
-            saveDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    Intent intent = new Intent();
-                    if (picture.contains(BlankDraw)) {
-                        intent.putExtra("Doodle", (String) null);
-                    } else {
-                        if (((CheckBox)findViewById(R.id.checkBox)).isChecked())
-                            intent.putExtra("Doodle", picture);
-                        else
-                            intent.putExtra("Doodle", (String)null);
-                        intent.putExtra("Message",((EditText)findViewById(R.id.messageInput)).getText().toString());
-                    }
-                    DrawActivity.this.setResult(RESULT_OK, intent);
-                    DrawActivity.this.finish();
-                }
-            });
-            saveDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.cancel();
-                }
-            });
-            saveDialog.show();
-
-            drawView.destroyDrawingCache();
         }
     }
     @Override

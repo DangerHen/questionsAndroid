@@ -71,7 +71,12 @@ public class MainActivity extends ListActivity {
         if (mRoomName == null || mRoomName.length() == 0) {
             mRoomName = "all";
         }
-
+        findViewById(R.id.reset_search).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Reset_Search();
+            }
+        });
         mUsername = intent.getExtras().getString("Username");
         mQuestionAdapter = new QuestionAdapter(this, new ArrayList<Question>());
         mAPI = RESTfulAPI.getInstance();
@@ -101,7 +106,7 @@ public class MainActivity extends ListActivity {
         });
 
         // Setup our input methods. Enter key on the keyboard or pushing the send button
-        EditText inputText = (EditText) findViewById(R.id.messageInput);
+    /*    EditText inputText = (EditText) findViewById(R.id.messageInput);
         inputText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
@@ -111,13 +116,13 @@ public class MainActivity extends ListActivity {
                 return true;
             }
         });
-
-        findViewById(R.id.sendButton).setOnClickListener(new View.OnClickListener() {
+*/
+/*        findViewById(R.id.sendButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 sendMessage();
             }
-        });
+        });*/
         findViewById(R.id.DrawButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -143,7 +148,7 @@ public class MainActivity extends ListActivity {
     }
     */
 
-    public void Reset_Search(View view) {
+    public void Reset_Search() {
         Map<String, String> query = new LinkedHashMap<>(); // use LinkedHashMap because the insertion order of sortBy and order should be maintained
         query.put("roomName", mRoomName);
         query.put("sortBy", "echo");
@@ -251,6 +256,11 @@ public class MainActivity extends ListActivity {
         mSocket.connect();
         mSocket.emit("join", mRoomName);
     }
+    @Override
+    public void onResume(){
+        super.onResume();
+        Reset_Search();
+    }
 
     public void emitLikeQuestion(String questionKey) {
         if(dbutil.contains(questionKey))
@@ -309,10 +319,8 @@ public class MainActivity extends ListActivity {
 
     private void BeginDrawing(){
         Intent intent= new Intent(this, DrawActivity.class);
-        intent.putExtra("Message",((EditText)findViewById(R.id.messageInput)).getText().toString());
-        intent.putExtra("image",image);
         intent.putExtra("RoomName",mRoomName);
-        startActivityForResult(intent, 2);
+        startActivity(intent);
     }
 
     public void enterReply(String key) {
@@ -361,14 +369,6 @@ public class MainActivity extends ListActivity {
                     }
                 });
             }
-        } else if (requestCode==2){
-            if (resultCode == RESULT_OK){
-                image=data.getExtras().getString("Doodle");
-                ((EditText)findViewById(R.id.messageInput)).setText(data.getExtras().getString("Message"));
-                Button drawbutton= (Button)findViewById(R.id.DrawButton);
-                drawbutton.setText("Drawed");
-            }
-
         }
     }
 

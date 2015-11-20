@@ -21,7 +21,6 @@
         android:id="@+id/reset_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="Reset_Search"
         android:text="Reset"
         />
 
@@ -50,21 +49,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/messageInput"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:inputType="textShortMessage"
-            android:lines="1"
-            android:singleLine="true" />
-
-        <ImageButton
-            android:id="@+id/sendButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_menu_send" />
 
         <Button
             android:id="@+id/DrawButton"

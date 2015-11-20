@@ -64,12 +64,6 @@
             android:layout_height="fill_parent"
             android:contentDescription="@string/erase"
             android:src="@drawable/eraser" />
-        <ImageButton
-            android:id="@+id/save_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:contentDescription="@string/save"
-            android:src="@drawable/save" />
     </LinearLayout>
     <hk.ust.cse.hunkim.questionroom.DrawingView
         android:id="@+id/drawing"
