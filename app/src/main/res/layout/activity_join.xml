@@ -10,10 +10,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="hk.ust.cse.hunkim.questionroom.JoinActivity">
 
-
-
-
-
     <AutoCompleteTextView
         android:id="@+id/room_name"
         android:layout_width="match_parent"
