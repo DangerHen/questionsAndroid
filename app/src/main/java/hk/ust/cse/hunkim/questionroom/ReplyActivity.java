@@ -6,6 +6,7 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +14,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+
+import com.google.repacked.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,12 +95,14 @@ public class ReplyActivity extends Activity {
         replyButton.setOnClickListener(
                 new Button.OnClickListener() {
                     public void onClick(View view) {
-                        String replyContent = replyText.getText().toString();
-                        ReplyActivity r = (ReplyActivity) view.getContext();
-                        //Reply reply = new Reply(replyContent, mQuestionKey);
-                        Reply reply = new Reply(replyContent, mQuestionKey, mUsername, incognitoMode);
-                        r.sendReply(reply);
-                        replyText.setText("");
+                        if (!replyText.getText().toString().trim().isEmpty()) {
+                            String replyContent = replyText.getText().toString();
+                            ReplyActivity r = (ReplyActivity) view.getContext();
+                            //Reply reply = new Reply(replyContent, mQuestionKey);
+                            Reply reply = new Reply(replyContent, mQuestionKey, mUsername, incognitoMode);
+                            r.sendReply(reply);
+                            replyText.setText("");
+                        }
                     }
                 }
         );

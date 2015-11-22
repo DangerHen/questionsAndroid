@@ -22,6 +22,7 @@ import android.graphics.BitmapFactory;
 import android.widget.Switch;
 
 import com.github.nkzawa.socketio.client.Socket;
+import com.google.repacked.apache.commons.lang3.StringUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -234,7 +235,7 @@ public class DrawActivity extends Activity implements View.OnClickListener {
     private void sendMessage() {
         EditText inputText = (EditText) findViewById(R.id.messageInput);
         String input = inputText.getText().toString();
-        if (!input.equals("")) {
+        if (!input.trim().isEmpty()) {
             // Create our 'model', a Chat object
             //Question question = new Question(input, mRoomName);
             Question question = new Question(input, mRoomName, mUsername, incognitoMode); // change Anonymous to the name of logged in user

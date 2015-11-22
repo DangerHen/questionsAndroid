@@ -66,4 +66,8 @@ public class Reply extends BaseObservable {
     public void setQuestionKey(String questionKey) {
         this.questionKey = questionKey;
     }
+
+    public String getUsername() {return username;}
+
+    public boolean isIncognito() {return isAnonymous;}
 }

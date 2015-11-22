@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 import java.util.zip.Inflater;
 
@@ -23,18 +25,32 @@ public class ReplyAdapter extends ArrayAdapter<Reply> {
     private LayoutInflater mInflater;
 
     ReplyAdapter(Context context, List<Reply> replies){
-        super(context, R.layout.reply,replies);
+        super(context, R.layout.reply, replies);
         mInflater = LayoutInflater.from(context);
         setNotifyOnChange(true);
     }
 
     public View getView(int position, View convertView, ViewGroup parent){
+
         if(convertView == null)
+        {
             mBinding = DataBindingUtil.inflate(mInflater, R.layout.reply, parent, false);
+            convertView = mBinding.getRoot();
+        }
         else
             mBinding = DataBindingUtil.getBinding(convertView);
         Reply reply = getItem(position);
         mBinding.setReply(reply);
+
+        TextView description = (TextView)convertView.findViewById(R.id.replyUsername);
+        if (reply.isIncognito())
+        {
+            description.setText("by Anonymous");
+        }
+        else
+        {
+            description.setText("by " + reply.getUsername());
+        }
         convertView = mBinding.getRoot();
         return convertView;
         /*

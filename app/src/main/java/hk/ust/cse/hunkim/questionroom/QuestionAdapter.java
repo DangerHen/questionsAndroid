@@ -95,7 +95,7 @@ public class QuestionAdapter extends ArrayAdapter<Question> {
             holder.dislikeButton = (ImageButton) convertView.findViewById(R.id.questionDislikeButton);
             holder.replyButton = (ImageButton) convertView.findViewById(R.id.questionReplyButton);
             holder.hashView = (TextView) convertView.findViewById(R.id.head_desc);
-            holder.description = (TextView) convertView.findViewById(R.id.questionTimestamp);
+            holder.description = (TextView) convertView.findViewById(R.id.questionUsername);
             convertView.setTag(holder);
         }
         else {
@@ -113,13 +113,13 @@ public class QuestionAdapter extends ArrayAdapter<Question> {
 
         //Display description
         TextView description = holder.description;
-        if (question.getUsername().equals(""))
+        if (question.isIncognito())
         {
-            description.setText(TimeDisplay.fromTimestamp(question.getTimestamp()) + "by Anonymous");
+            description.setText("by Anonymous");
         }
         else
         {
-            description.setText(TimeDisplay.fromTimestamp(question.getTimestamp()) + "by " + question.getUsername());
+            description.setText("by " + question.getUsername());
 
         }
 

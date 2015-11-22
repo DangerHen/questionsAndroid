@@ -244,4 +244,6 @@ public class Question extends BaseObservable {
     }
 
     public String getUsername () {return username;}
+
+    public boolean isIncognito() { return isAnonymous;}
 }
