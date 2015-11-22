@@ -242,4 +242,6 @@ public class Question extends BaseObservable {
     public String getImage(){
         return image;
     }
+
+    public String getUsername () {return username;}
 }
