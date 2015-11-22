@@ -19,8 +19,10 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.graphics.BitmapFactory;
+import android.widget.Switch;
 
 import com.github.nkzawa.socketio.client.Socket;
+import com.google.repacked.apache.commons.lang3.StringUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,21 +54,35 @@ public class DrawActivity extends Activity implements View.OnClickListener {
         LinearLayout paintLayout = (LinearLayout)findViewById(R.id.paint_colors);
         currPaint = (ImageButton)paintLayout.getChildAt(0);
         currPaint.setImageDrawable(getResources().getDrawable(R.drawable.paint_pressed, null));
-        smallBrush = getResources().getInteger(R.integer.small_size);
-        mediumBrush = getResources().getInteger(R.integer.medium_size);
-        largeBrush = getResources().getInteger(R.integer.large_size);
+        smallBrush = 5;
+        mediumBrush = 10;
+        largeBrush = 20;
         drawBtn = (ImageButton)findViewById(R.id.draw_btn);
         drawBtn.setOnClickListener(this);
         eraseBtn = (ImageButton)findViewById(R.id.erase_btn);
         eraseBtn.setOnClickListener(this);
         newBtn = (ImageButton)findViewById(R.id.new_btn);
         newBtn.setOnClickListener(this);
+        findViewById(R.id.drawRegion).setVisibility(View.GONE);
         findViewById(R.id.sendButton2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 sendMessage();
             }
         });
+
+        findViewById(R.id.newQuestionSwitch).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                if (((Switch)findViewById(R.id.newQuestionSwitch)).isChecked()) {
+                    findViewById(R.id.drawRegion).setVisibility(View.VISIBLE);
+                }
+                else{
+                    findViewById(R.id.drawRegion).setVisibility(View.GONE);
+                }
+            }
+        });
+
         Intent intent=getIntent();
         String picture= intent.getExtras().getString("image");
         mRoomName=intent.getExtras().getString("RoomName");
@@ -79,8 +95,13 @@ public class DrawActivity extends Activity implements View.OnClickListener {
             drawView.setOriginalBitmap(bitmap);
         }
 
+        drawView.setBrushSize(smallBrush);
+        drawView.setLastBrushSize(smallBrush);
+
         mAPI = RESTfulAPI.getInstance();
         mSocket = mAPI.getSocket();
+
+
 
 
 
@@ -214,16 +235,21 @@ public class DrawActivity extends Activity implements View.OnClickListener {
     private void sendMessage() {
         EditText inputText = (EditText) findViewById(R.id.messageInput);
         String input = inputText.getText().toString();
-        if (!input.equals("")) {
+        if (!input.trim().isEmpty()) {
             // Create our 'model', a Chat object
             //Question question = new Question(input, mRoomName);
             Question question = new Question(input, mRoomName, mUsername, incognitoMode); // change Anonymous to the name of logged in user
-            if (((CheckBox)findViewById(R.id.checkBox)).isChecked()) {
+            if (((Switch)findViewById(R.id.newQuestionSwitch)).isChecked()) {
                 drawView.setDrawingCacheEnabled(true);
                 Bitmap bitmap = drawView.getDrawingCache();
+                bitmap = (Bitmap.createScaledBitmap(bitmap, bitmap.getWidth(), 400, false));
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+
                 byte[] b = baos.toByteArray();
+
+
+
                 String temp = Base64.encodeToString(b, Base64.DEFAULT);
                 String picture = "data:image/png;base64," + temp;
                 question.setImage(picture);

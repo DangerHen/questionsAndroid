@@ -338,7 +338,6 @@ public class MainActivity extends ListActivity {
         finish();
     }
 
-
     public void Search(View view) {
         Intent intent = new Intent(this, SearchActivity.class);
         intent.putExtra("Room Name", mRoomName);

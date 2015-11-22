@@ -80,6 +80,7 @@ public class QuestionAdapter extends ArrayAdapter<Question> {
         public ImageButton dislikeButton;
         public ImageButton replyButton;
         public TextView hashView;
+        public TextView description;
     }
 
     @Override
@@ -94,6 +95,7 @@ public class QuestionAdapter extends ArrayAdapter<Question> {
             holder.dislikeButton = (ImageButton) convertView.findViewById(R.id.questionDislikeButton);
             holder.replyButton = (ImageButton) convertView.findViewById(R.id.questionReplyButton);
             holder.hashView = (TextView) convertView.findViewById(R.id.head_desc);
+            holder.description = (TextView) convertView.findViewById(R.id.questionUsername);
             convertView.setTag(holder);
         }
         else {
@@ -107,6 +109,19 @@ public class QuestionAdapter extends ArrayAdapter<Question> {
         // Display question
         String msgString = question.getMsgString();
         ((TextView) convertView.findViewById(R.id.head_desc)).setText(Html.fromHtml(msgString));
+
+
+        //Display description
+        TextView description = holder.description;
+        if (question.isIncognito())
+        {
+            description.setText("by Anonymous");
+        }
+        else
+        {
+            description.setText("by " + question.getUsername());
+
+        }
 
         // Like button
         //ImageButton echoButton = (ImageButton) convertView.findViewById(R.id.questionEchoButton);
